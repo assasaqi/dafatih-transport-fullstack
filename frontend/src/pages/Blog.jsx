@@ -14,7 +14,7 @@ const Blog = () => {
 
     fetch('http://localhost:5000/api/blogs')
       .then((res) => {
-        if (!res.ok) throw new Error('Gagal mengambil data artikel dari server');
+        if (!res.ok) throw new Error('Gagal mengambil data dari server backend');
         return res.json();
       })
       .then((data) => {
@@ -23,19 +23,21 @@ const Blog = () => {
       })
       .catch((err) => {
         console.error('Error fetching blogs:', err);
-        setError('Gagal memuat artikel blog dari server.');
+        setError('Gagal mengambil data dari server backend. Pastikan server aktif');
         setLoading(false);
       });
   }, []);
 
   const displayedArticles = articles.slice(0, visibleCount);
 
+  // Tampilan saat data sedang di-load dari Database
   if (loading) {
-    return <div className="page-view" style={{ textAlign: 'center', padding: '80px' }}>Memuat artikel blog...</div>;
+    return <div className="page-view" style={{ textAlign: 'center', padding: '80px 20px' }}>Memuat artikel blog...</div>;
   }
 
+// Tampilan saat terjadi eror koneksi/backend
   if (error) {
-    return <div className="page-view" style={{ textAlign: 'center', padding: '80px', color: 'red' }}>{error}</div>;
+    return <div className="page-view" style={{ textAlign: 'center', padding: '80px 20px', color: 'red' }}>{error}</div>;
   }
 
   return (

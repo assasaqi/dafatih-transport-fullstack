@@ -1,6 +1,6 @@
 import React from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
-import Header from './components/common/Header';
+import Navbar from './components/common/Navbar';
 import MobileBottomNav from './components/common/MobileBottomNav';
 import Footer from './components/common/Footer';
 
@@ -16,8 +16,8 @@ function App() {
 
   return (
     <div className="app-container">
-      {/* Header Navigasi Atas */}
-      <Header />
+      {/* Navbar Navigasi Atas */}
+      <Navbar />
 
       {/* Rute Utama Halaman */}
       <main className="main-content">

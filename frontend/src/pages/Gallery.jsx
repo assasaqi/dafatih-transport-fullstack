@@ -22,7 +22,7 @@ const Gallery = () => {
     fetch('http://localhost:5000/api/gallery')
       .then((res) => {
         if (!res.ok) {
-          throw new Error('Gagal mengambil data galeri dari server backend');
+          throw new Error('Gagal mengambil data dari server backend');
         }
         return res.json();
       })
@@ -34,7 +34,7 @@ const Gallery = () => {
       })
       .catch((err) => {
         console.error('Error fetching gallery:', err);
-        setError('Gagal memuat galeri dari server backend. Pastikan server aktif.');
+        setError('Gagal mengambil data dari server backend. Pastikan server aktif.');
         setLoading(false);
       });
   }, []);
@@ -82,7 +82,6 @@ const Gallery = () => {
   if (loading) {
     return (
       <div className="page-view" style={{ textAlign: 'center', padding: '80px 20px', color: '#64748b' }}>
-        <i className="fa-solid fa-spinner fa-spin" style={{ fontSize: '2rem', marginBottom: '10px', color: '#0284c7' }}></i>
         <p>Memuat galeri dari database...</p>
       </div>
     );
@@ -92,7 +91,6 @@ const Gallery = () => {
   if (error) {
     return (
       <div className="page-view" style={{ textAlign: 'center', padding: '80px 20px', color: '#ef4444' }}>
-        <i className="fa-solid fa-triangle-exclamation" style={{ fontSize: '2rem', marginBottom: '10px' }}></i>
         <p>{error}</p>
       </div>
     );

@@ -19,7 +19,7 @@ const Tariffs = () => {
     fetch('http://localhost:5000/api/routes')
       .then((res) => {
         if (!res.ok) {
-          throw new Error('Gagal mengambil data rute dari server backend');
+          throw new Error('Gagal mengambil data dari server backend');
         }
         return res.json();
       })
@@ -29,7 +29,7 @@ const Tariffs = () => {
       })
       .catch((err) => {
         console.error('Error fetching routes:', err);
-        setError('Gagal memuat daftar tarif dari server. Pastikan backend sudah aktif.');
+        setError('Gagal mengambil data dari server backend. Pastikan backend sudah aktif.');
         setLoading(false);
       });
   }, []);
@@ -103,12 +103,13 @@ const Tariffs = () => {
     setCurrentPage(1);
   }, [selectedCategory, searchQuery]);
 
+// Tampilan saat data sedang di-load dari Database
   if (loading) {
-    return <div className="tariffs-page-container" style={{ textAlign: 'center', padding: '80px' }}>Memuat daftar tarif transportasi...</div>;
+    return <div className="tariffs-page-container" style={{ textAlign: 'center', padding: '80px 20px' }}>Memuat daftar tarif transportasi...</div>;
   }
-
+    // Tampilan saat terjadi eror koneksi/backend
   if (error) {
-    return <div className="tariffs-page-container" style={{ textAlign: 'center', padding: '80px', color: 'red' }}>{error}</div>;
+    return <div className="tariffs-page-container" style={{ textAlign: 'center', padding: '80px 20px', color: 'red' }}>{error}</div>;
   }
 
   return (
@@ -132,13 +133,13 @@ const Tariffs = () => {
         }
         .tariffs-header h1 {
           margin: 0 0 8px 0;
-          font-size: 26px;
+          font-size: 22px;
           color: #333;
         }
         .tariffs-header p {
           margin: 0 0 15px 0;
           color: #666;
-          font-size: 14px;
+          font-size: 12px;
           max-width: 600px;
         }
         .filter-toolbar {
@@ -307,7 +308,7 @@ const Tariffs = () => {
           }
           .tariffs-header {
             align-items: flex-start;
-            text-align: left;
+            text-align: center;
           }
           .tariffs-header p {
             max-width: 100%;

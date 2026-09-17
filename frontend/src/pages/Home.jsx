@@ -36,7 +36,7 @@ const Home = () => {
       })
       .catch((err) => {
         console.error('Error fetching routes:', err);
-        setError('Gagal memuat rute dari server. Pastikan backend sudah aktif.');
+        setError('Gagal mengambil data dari server backend. Pastikan server aktif.');
         setLoading(false);
       });
   }, []);
@@ -86,17 +86,26 @@ const Home = () => {
     });
   };
 
+    // Tampilan saat data sedang di-load dari Database
   if (loading) {
-    return <div className="page-view" style={{ textAlign: 'center', padding: '80px' }}>Memuat data rute perjalanan...</div>;
+    return <div className="page-view" style={{ textAlign: 'center', padding: '80px 20px' }}>Memuat data rute perjalanan...</div>;
   }
 
+    // Tampilan saat terjadi eror koneksi/backend
   if (error) {
-    return <div className="page-view" style={{ textAlign: 'center', padding: '80px', color: 'red' }}>{error}</div>;
+    return <div className="page-view" style={{ textAlign: 'center', padding: '80px 20px' , color: 'red' }}>{error}</div>;
   }
 
   return (
     <div className="page-view home-page-wrapper">
       <style>{`
+        /* Mode Desktop: Hero Rata Tengah & Luas */
+        .hero-content-wrapper {
+          text-align: center !important;
+          max-width: 800px;
+          margin: 0 auto;
+        }
+
         /* Toolbar Kategori Scrollable di Mobile */
         .category-toolbar {
           display: flex;
@@ -118,7 +127,7 @@ const Home = () => {
           border-radius: 4px;
         }
 
-        /* Navigasi Paginasi Ringkas (Maks 3 Halaman) */
+        /* Navigasi Paginasi Ringkas */
         .pagination {
           display: flex;
           justify-content: center;
@@ -152,28 +161,62 @@ const Home = () => {
           cursor: not-allowed;
         }
 
-        /* Responsif Khusus Mobile: Rata Kiri untuk Judul & Paragraf */
+        /* Responsif Khusus Mobile */
         @media (max-width: 768px) {
-          .category-toolbar {
-            justify-content: flex-start;
-            flex-wrap: nowrap;
+          /* Perkecil Banner Hero agar tidak memenuhi layar */
+          .hero {
+            min-height: 140px !important;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            margin: 10px 10px 0 10px;
           }
+          .hero-content-wrapper {
+            text-align: center !important;
+            padding: 15px 12px !important;
+          }
+          .hero-content-wrapper h1 {
+            font-size: 1.05rem !important;
+            line-height: 1.25 !important;
+            margin-bottom: 4px !important;
+          }
+          .hero-content-wrapper p {
+            font-size: 0.75rem !important;
+            line-height: 1.2 !important;
+            margin: 0 !important;
+          }
+
+          /* Perbaikan Ukuran Sub-Section Title di Mobile */
           .sub-section-title {
             text-align: left !important;
             padding: 0 10px;
+            margin-bottom: 10px !important;
+          }
+          .sub-section-title h2 {
+            font-size: 1.1rem !important;
+            line-height: 1.3 !important;
+            margin-bottom: 4px !important;
+          }
+          .sub-section-title h2 i {
+            font-size: 1rem !important;
           }
           .sub-section-title p {
             text-align: left !important;
+            font-size: 0.75rem !important;
+            line-height: 1.3 !important;
+            color: #666;
           }
-          .hero-content-wrapper {
-            text-align: left !important;
-            padding: 0 20px;
+
+          .category-toolbar {
+            justify-content: flex-start;
+            flex-wrap: nowrap;
           }
         }
       `}</style>
 
       {/* Hero Section */}
-      <section className="hero" style={{ position: 'relative', overflow: 'hidden', minHeight: '400px' }}>
+      <section className="hero" style={{ position: 'relative', overflow: 'hidden', minHeight: '380px' }}>
         <div className="hero-bg-slideshow" style={{ position: 'absolute', inset: 0, zIndex: 1 }}>
           {slides.map((slide, index) => (
             <div
@@ -192,7 +235,10 @@ const Home = () => {
           ))}
         </div>
 
-        <div className="hero-content-wrapper" style={{ position: 'relative', zIndex: 2 }}>
+        {/* Overlay tipis agar teks selalu terbaca jelas */}
+        <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.4)', zIndex: 1.5 }} />
+
+        <div className="hero-content-wrapper" style={{ position: 'relative', zIndex: 2, color: '#fff' }}>
           <h1>Layanan Antar-Jemput & Transportasi Lombok Terbaik</h1>
           <p>Spesialis antar-jemput bandara, pelabuhan, dan transfer antar destinasi di Pulau Lombok.</p>
         </div>
@@ -202,7 +248,7 @@ const Home = () => {
       <section className="section">
         <div className="sub-section-title" style={{ marginBottom: '20px', textAlign: 'center' }}>
           <h2>
-            <i className="fa-solid fa-route" style={{ color: 'var(--primary)' }}></i> Pilihan Rute Berdasarkan Penjemputan
+            <i className="fa-solid fa-route" style={{ color: 'var(--primary, #007bff)' }}></i> Pilihan Rute Berdasarkan Penjemputan
           </h2>
           <p>Klik tombol kategori di bawah untuk menyaring rute penjemputan yang Anda inginkan.</p>
         </div>
@@ -243,8 +289,7 @@ const Home = () => {
                 <ul className="tour-features">
                   <li><i className="fa-solid fa-check"></i> Max 4 Penumpang + Bagasi</li>
                   <li><i className="fa-solid fa-check"></i> Driver Berpengalaman</li>
-                  <li><i className="fa-solid fa-check"></i> AC Dingin & Nyaman</li>
-                </ul>
+                               </ul>
                 <button
                   className="btn-select-tariff btn-submit"
                   onClick={() => handleSelectRoute(route)}
