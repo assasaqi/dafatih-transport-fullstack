@@ -1,0 +1,57 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Route {
+  id             Int      @id @default(autoincrement())
+  category       String
+  pickup         String
+  drop           String
+  price          Int
+  priceFormatted String
+  title          String
+  description    String
+  image          String
+  badge          String
+  icon           String
+  createdAt      DateTime @default(now())
+}
+
+model Booking {
+  id           Int      @id @default(autoincrement())
+  customerName String
+  whatsapp     String
+  pickupDate   String
+  pickupTime   String
+  pickupLoc    String
+  dropLoc      String
+  price        Int
+  status       String   @default("Pending")
+  createdAt    DateTime @default(now())
+}
+
+model Gallery {
+  id          Int      @id @default(autoincrement())
+  title       String   // Judul atau deskripsi singkat foto
+  category    String   // Misal: Armada, Pelanggan, Destinasi, Penjemputan
+  imageUrl    String   // URL gambar (misal: http://localhost:5000/images/dokumentasi1.jpg)
+  description String?  // Keterangan tambahan (opsional)
+  createdAt   DateTime @default(now())
+}
+
+model Blog {
+  id          Int      @id @default(autoincrement())
+  title       String
+  slug        String?
+  author      String   @default("Admin Dafatih")
+  category    String   // Misal: Tips Travel, Destinasi, Info Layanan
+  image       String   // URL atau Base64 gambar
+  content     String   // Isi lengkap artikel blog
+  snippet     String?  // Ringkasan singkat
+  createdAt   DateTime @default(now())
+}
